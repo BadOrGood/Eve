@@ -1,2 +1,2 @@
 # Eve
-Eve Antivirus Helper
+Eve Antivirus Helper. Scans for code caves, code appended, and file extension exploits
