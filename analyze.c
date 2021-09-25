@@ -37,7 +37,7 @@ BOOL EVEAPI AnalyzeIsExecutable(
   }
 
   for (ULONG_PTR i = 0; i != ARRAYSIZE(ExecutableExtensionsArray); i++) {
-    if (!_wcsicmp(szExtensionPart, ExecutableExtensionsArray[i])) {
+    if (wcslen(ExecutableExtensionsArray[i]) == _wcsicmp(szExtensionPart, ExecutableExtensionsArray[i])) {
       return TRUE;
     }
   }
@@ -75,7 +75,9 @@ static BOOL EVEAPI AnalyzeFileExtension(
 
       while (LocalExtensionBlob) {
         for (ULONG_PTR i = 0; i != LocalExtensionBlob->dwCount; i++) {
-          if (!_wcsnicmp(szPreLastExtension, LocalExtensionBlob->sz[i], wcslen(LocalExtensionBlob->sz[i]))) {
+          SIZE_T cxExtension = wcslen(LocalExtensionBlob->sz[i]);
+        
+          if (cxExtension == _wcsnicmp(szPreLastExtension, LocalExtensionBlob->sz[i], cxExtension))) {
           #ifdef _DEBUG
             DebugPrint("found hidden virus using extension exploits, %ls", $szFilePath);
           #endif
