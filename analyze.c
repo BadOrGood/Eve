@@ -75,9 +75,7 @@ static BOOL EVEAPI AnalyzeFileExtension(
 
       while (LocalExtensionBlob) {
         for (ULONG_PTR i = 0; i != LocalExtensionBlob->dwCount; i++) {
-          SIZE_T cxExtension = wcslen(LocalExtensionBlob->sz[i]);
-        
-          if (cxExtension == _wcsnicmp(szPreLastExtension, LocalExtensionBlob->sz[i], cxExtension))) {
+          if (!_wcsnicmp(szPreLastExtension, LocalExtensionBlob->sz[i], wcslen(LocalExtensionBlob->sz[i])))) {
           #ifdef _DEBUG
             DebugPrint("found hidden virus using extension exploits, %ls", $szFilePath);
           #endif
@@ -319,7 +317,7 @@ ULONG WINAPI AnalyzeFileThread(
   if (AnalyzeFile(szFilePath)) {
     TastNotificationShow(L"Found Virus");
 
-    // DeleteFileW(szFilePath);
+    DeleteFileW(szFilePath);
   }
 
   return ERROR_SUCCESS;
